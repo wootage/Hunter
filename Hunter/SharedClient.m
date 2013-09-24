@@ -3,7 +3,7 @@
 
 @implementation SharedClient
 
-static NSString * const kAFAppDotNetAPIBaseURLString = @"http://8tracks.com/";
+static NSString * const kAFAppDotNetAPIBaseURLString = @"https://www.mousehuntgame.com/api/"; //"http://httpbin.org/post"
 
 
 + (SharedClient *)sharedClient {
@@ -14,19 +14,6 @@ static NSString * const kAFAppDotNetAPIBaseURLString = @"http://8tracks.com/";
     });
     
     return _sharedClient;
-}
-
-- (id)initWithBaseURL:(NSURL *)url {
-    self = [super initWithBaseURL:url];
-    if (!self) {
-        return nil;
-    }
-    
-    [self registerHTTPOperationClass:[AFJSONRequestOperation class]];
-    
-    [self setDefaultHeader:@"Accept" value:@"application/json"];
-    
-    return self;
 }
 
 @end

@@ -1,15 +1,10 @@
-//
-//  AppDelegate.h
-//  Hunter
-//
-//  Created by Dimitar Dimitrov on 9/24/13.
-//  Copyright (c) 2013 Dimitar Dimitrov. All rights reserved.
-//
-
 #import <UIKit/UIKit.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate> {
+    int time;
+}
 
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) NSTimer *timer;
 
 @end
