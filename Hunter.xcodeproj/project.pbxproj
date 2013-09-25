@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6B9FBF0C17F1E591005A7955 /* Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B9FBF0B17F1E591005A7955 /* Alert.m */; };
 		6BA3BF1417F176990093BB8F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BA3BF1317F176990093BB8F /* Foundation.framework */; };
 		6BA3BF1617F176990093BB8F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BA3BF1517F176990093BB8F /* CoreGraphics.framework */; };
 		6BA3BF1817F176990093BB8F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BA3BF1717F176990093BB8F /* UIKit.framework */; };
@@ -50,6 +51,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6B9FBF0A17F1E591005A7955 /* Alert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alert.h; sourceTree = "<group>"; };
+		6B9FBF0B17F1E591005A7955 /* Alert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Alert.m; sourceTree = "<group>"; };
 		6BA3BF1017F176990093BB8F /* Hunter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hunter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BA3BF1317F176990093BB8F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6BA3BF1517F176990093BB8F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -128,6 +131,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6B9FBF0917F1E591005A7955 /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				6B9FBF0A17F1E591005A7955 /* Alert.h */,
+				6B9FBF0B17F1E591005A7955 /* Alert.m */,
+			);
+			path = Alert;
+			sourceTree = "<group>";
+		};
 		6BA3BF0717F176990093BB8F = {
 			isa = PBXGroup;
 			children = (
@@ -261,6 +273,7 @@
 		6BA3BF5A17F178A60093BB8F /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				6B9FBF0917F1E591005A7955 /* Alert */,
 				6BA3BF6B17F17A4D0093BB8F /* AFNetworking */,
 				6BA3BF5B17F178B70093BB8F /* ECSlidingViewController */,
 			);
@@ -436,6 +449,7 @@
 				6BA3BF6917F179F00093BB8F /* ApiCalls.m in Sources */,
 				6BA3BF2417F176990093BB8F /* AppDelegate.m in Sources */,
 				6BA3BF6017F178B70093BB8F /* ECSlidingViewController.m in Sources */,
+				6B9FBF0C17F1E591005A7955 /* Alert.m in Sources */,
 				6BA3BF2017F176990093BB8F /* main.m in Sources */,
 				6BA3BF4B17F177800093BB8F /* InitViewController.m in Sources */,
 				6BA3BF5417F177CC0093BB8F /* LoginViewController.m in Sources */,

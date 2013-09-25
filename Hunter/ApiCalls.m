@@ -29,7 +29,7 @@
                                   }];
 }
 
-- (void)login :(NSString *)username :(NSString *)password :(NSString *)gameVersion {
+- (void)login :(NSString *)username :(NSString *)password {
     
     NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
     [cookieStorage setCookieAcceptPolicy:NSHTTPCookieAcceptPolicyAlways];
@@ -37,7 +37,9 @@
 
     NSHTTPCookie *coo = [NSHTTPCookie cookieWithProperties:cookie];
     [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:coo];
-
+    
+    NSUserDefaults *saved = [NSUserDefaults standardUserDefaults];
+    NSString *gameVersion = [saved objectForKey:@"game_version"];
     
     [[SharedClient sharedClient]setDefaultHeader:@"User-Agent" value:@"Mozilla/5.0 (Linux; U; Android 2.3.3; en-en; HTC Desire Build/FRF91) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1"];
     [[SharedClient sharedClient]setDefaultHeader:@"Accept" value:@"application/json, text/javascript, */*; q=0.01"];
@@ -71,16 +73,20 @@
                                   }];
 }
 
-- (void)hunt :(NSString *)gameVersion{
+- (void)hunt {
     
     NSString *stringPath = [NSString stringWithFormat:@"action/turn/me"];
+    
+    NSUserDefaults *saved = [NSUserDefaults standardUserDefaults];
+    NSString *gameVersion = [saved objectForKey:@"game_version"];
+    NSString *loginToken = [saved objectForKey:@"login_token"];
     
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             @"2",@"v",
                             @"Cordova%%3AAndroid",@"client_id",
                             @"0.12.4",@"client_version",
                             gameVersion,@"game_version",
-                            @"eebb14b4a5c18e19dacdf2b84ef8df5e|100006700177710",@"login_token",
+                            loginToken,@"login_token",
                             nil];
     
     [[SharedClient sharedClient] postPath:stringPath parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {

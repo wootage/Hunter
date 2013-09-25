@@ -1,4 +1,5 @@
 #import "AppDelegate.h"
+#import "ApiCalls.h"
 
 @implementation AppDelegate
 
@@ -8,20 +9,23 @@
     return YES;
 }
 							
-- (void)applicationWillResignActive:(UIApplication *)application
-{
+- (void)applicationWillResignActive:(UIApplication *)application {
 }
 
-- (void)applicationDidEnterBackground:(UIApplication *)application
-{
-    time = 5;
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+
     UIBackgroundTaskIdentifier bgTask = 0;
     UIApplication  *app = [UIApplication sharedApplication];
     bgTask = [app beginBackgroundTaskWithExpirationHandler:^{
         [app endBackgroundTask:bgTask];
     }];
-    _timer = [NSTimer scheduledTimerWithTimeInterval:time target:self
-                                                       selector:@selector(hunt) userInfo:nil repeats:NO];
+    
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(prepareToHunt)
+                                                 name: @"prepareToHunt"
+                                               object: nil];
+    
+    [self hunt];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -31,7 +35,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"prepareToHunt" object:nil];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -39,14 +43,25 @@
     [_timer invalidate];
 }
 
-- (void)hunt {
-    NSDate *newDate;
-    NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:~ NSTimeZoneCalendarUnit fromDate:[NSDate date]];
+- (void)prepareToHunt {
     
-    newDate = [[NSCalendar currentCalendar] dateFromComponents:dateComponents];
-    time ++;
-    NSLog(@"%@",newDate);
-    _timer = [NSTimer scheduledTimerWithTimeInterval:time target:self selector:@selector(hunt) userInfo:nil repeats:NO];
+    NSUserDefaults *saved = [NSUserDefaults standardUserDefaults];
+    NSString *isLogged = [saved objectForKey:@"isLogged"];
+    int remining = [[saved objectForKey:@"timeRemining"]intValue];
+    
+    if ([isLogged isEqualToString:@"false"]) {
+        [_timer invalidate];
+    }else {
+        
+        time = remining ;//+ arc4random_uniform(30) + 30;
+        NSLog(@"time remining : %d",remining);
+        NSLog(@"%d",time);
+        _timer = [NSTimer scheduledTimerWithTimeInterval:time target:self selector:@selector(hunt) userInfo:nil repeats:NO];
+    }
+}
+
+- (void)hunt {
+    [[ApiCalls sharedClient]hunt];
 }
 
 @end

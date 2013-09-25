@@ -28,4 +28,5 @@
 - (IBAction)btnMenuClicked:(id)sender {
     [self.slidingViewController anchorTopViewTo:ECRight];
 }
+
 @end
