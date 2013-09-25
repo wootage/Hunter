@@ -64,8 +64,7 @@
 
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
@@ -136,14 +135,14 @@
 }
 
 - (void)huntSuccess :(NSNotification *)anote {
-   /* NSDictionary *response = [anote userInfo];
+    NSDictionary *response = [anote userInfo];
     NSDictionary *jsonResponse = [response objectForKey:@"user"];
-    NSArray *journal = [jsonResponse objectForKey:@"journals"];*/
+    NSArray *journal = [jsonResponse objectForKey:@"journals"];
     
     [saved setObject:@"900" forKey:@"timeRemining"];
     [saved synchronize];
     
-     //NSLog(@"hurn sounded ");
+    NSLog(@"%@",journal);
     
     [[NSNotificationCenter defaultCenter] postNotificationName: @"prepareToHunt" object: nil userInfo:nil];
 }
@@ -151,28 +150,39 @@
 - (void)huntFail :(NSNotification *)anote {
     
     NSDictionary *response = [anote userInfo];
-    NSString *jsonResponse = [response objectForKey:@"NSLocalizedRecoverySuggestion"];
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData: [jsonResponse dataUsingEncoding:NSUTF8StringEncoding]
-                                                         options: NSJSONReadingMutableContainers
-                                                           error: nil];
-    NSDictionary *errors = [json objectForKey:@"error"];
-    NSString *errorMessage = [errors objectForKey:@"message"];
     
+    NSString *connectionAvailable = [response objectForKey:@"NSLocalizedDescription"];
     
-    NSDictionary *user = [json objectForKey:@"user"];
-    NSString *timeRemining = [user objectForKey:@"next_activeturn_seconds"];
-    
-    [saved setObject:timeRemining forKey:@"timeRemining"];
-    
-    if ([errorMessage isEqualToString:@"An active session is required."]) {
-        [saved setObject:@"false" forKey:@"isLogged"];
-    }
-    
-    [saved synchronize];    
-    
-    //NSLog(@"%@",errorMessage);
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName: @"prepareToHunt" object: nil userInfo:nil];
+    if ([connectionAvailable isEqualToString:@"The Internet connection appears to be offline."]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName: @"connectionFailed" object:nil userInfo:nil];
+        
+    }else {
+        
+        NSString *jsonResponse = [response objectForKey:@"NSLocalizedRecoverySuggestion"];
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData: [jsonResponse dataUsingEncoding:NSUTF8StringEncoding]
+                                                             options: NSJSONReadingMutableContainers
+                                                               error: nil];
+        NSDictionary *errors = [json objectForKey:@"error"];
+        NSString *errorMessage = [errors objectForKey:@"message"];
+        
+        
+        NSDictionary *user = [json objectForKey:@"user"];
+        NSString *timeRemining = [user objectForKey:@"next_activeturn_seconds"];
+        
+        [saved setObject:timeRemining forKey:@"timeRemining"];
+        
+        if ([errorMessage isEqualToString:@"An active session is required."]) {
+            [saved setObject:@"false" forKey:@"isLogged"];
+            [[NSNotificationCenter defaultCenter] postNotificationName: @"sessionExpired" object: nil userInfo:nil];
+        }
+        
+        [saved synchronize];
+        
+        NSLog(@"%@",errorMessage);
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName: @"prepareToHunt" object: nil userInfo:nil];
+
+       }
        //Possible errors :
     //You are out of bait.
     //You have recently been on a hunt.
