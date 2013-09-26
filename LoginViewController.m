@@ -105,7 +105,7 @@
 
 - (void) gameVersionSuccess :(NSNotification *)anote {
     
-    NSDictionary *response = [anote userInfo];    
+    NSDictionary *response = [anote userInfo];
     NSString *gameVersion = [response objectForKey:@"game_version"];
     
     [saved setObject:gameVersion forKey:@"game_version"];
@@ -141,9 +141,9 @@
 }
 
 - (void)huntSuccess :(NSNotification *)anote {
-    /*NSDictionary *response = [anote userInfo];
+    NSDictionary *response = [anote userInfo];
     NSDictionary *jsonResponse = [response objectForKey:@"user"];
-    NSArray *journal = [jsonResponse objectForKey:@"journals"]; */
+    NSArray *journal = [jsonResponse objectForKey:@"journals"];
     
     [saved setObject:@"900" forKey:@"timeRemining"];
     [saved synchronize];
@@ -161,7 +161,7 @@
     NSString *connectionAvailable = [response objectForKey:@"NSLocalizedDescription"];
     
     if ([connectionAvailable isEqualToString:@"The Internet connection appears to be offline."]) {
-        [[NSNotificationCenter defaultCenter] postNotificationName: @"connectionFailed" object:nil userInfo:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName: @"sessionExpired" object:nil userInfo:nil];
         
     }else {
         
@@ -176,19 +176,20 @@
         NSDictionary *user = [json objectForKey:@"user"];
         NSString *timeRemining = [user objectForKey:@"next_activeturn_seconds"];
         
-        [saved setObject:timeRemining forKey:@"timeRemining"];
+        [saved setObject:timeRemining forKey:@"timeRemining"];        
         
         if ([errorMessage isEqualToString:@"An active session is required."]) {
             [saved setObject:@"false" forKey:@"isLogged"];
-            [[NSNotificationCenter defaultCenter] postNotificationName: @"sessionExpired" object: nil userInfo:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName: @"sessionExpired" object: errorMessage userInfo:nil];
         }
-        
-        [saved synchronize];
-        
+        if ([errorMessage isEqualToString:@"You are out of bait."]) {
+            [[NSNotificationCenter defaultCenter] postNotificationName: @"sessionExpired" object: errorMessage userInfo:nil];
+        }else {
+            [saved synchronize];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName: @"prepareToHunt" object: nil userInfo:nil];
+        }
         NSLog(@"%@",errorMessage);
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName: @"prepareToHunt" object: nil userInfo:nil];
-
        }
        //Possible errors :
     //You are out of bait.

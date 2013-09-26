@@ -22,18 +22,13 @@
     }];
     
     [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(prepareToHunt)
+                                             selector: @selector(prepareToHunt:)
                                                  name: @"prepareToHunt"
                                                object: nil];
     
     [[NSNotificationCenter defaultCenter] addObserver: self
                                              selector: @selector(sessionExpired:)
                                                  name: @"sessionExpired"
-                                               object: nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(sessionExpired:)
-                                                 name: @"connectionFailed"
                                                object: nil];
     [self hunt];
 }
@@ -48,14 +43,13 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"prepareToHunt" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"sessionExpired" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"connectionFailed" object:nil];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     [_timer invalidate];
 }
 
-- (void)prepareToHunt {
+- (void)prepareToHunt:(NSNotification *)notification {
     
     NSUserDefaults *saved = [NSUserDefaults standardUserDefaults];
     NSString *isLogged = [saved objectForKey:@"isLogged"];
@@ -78,18 +72,16 @@
 
 - (void) sessionExpired: (NSNotification *)notification {
 
-    NSString *name = [notification name];
-    
-    if ([name isEqualToString:@"connectionFailed"]) {
-        [_notif setAlertBody:@"Internet connection failed"];
-    }else {
-        [_notif setAlertBody:@"Please login"];
-    }
+    NSString *name = [notification object];
+
+    [_notif setAlertBody:name];
     
     [_notif setSoundName:UILocalNotificationDefaultSoundName];
     
     [_notif setFireDate:[NSDate dateWithTimeIntervalSinceNow:2]];
     [_notif setTimeZone:[NSTimeZone defaultTimeZone]];
+    
+    [_timer invalidate];
     
     [[UIApplication sharedApplication] setScheduledLocalNotifications:[NSArray arrayWithObject:_notif]];
 }
