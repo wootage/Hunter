@@ -28,6 +28,13 @@
     
     saved = [NSUserDefaults standardUserDefaults];
     
+    UIGraphicsBeginImageContext(self.view.frame.size);
+    [[UIImage imageNamed:@"background.jpg"] drawInRect:self.view.bounds];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    self.view.backgroundColor = [UIColor colorWithPatternImage:image];
+    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
                                    initWithTarget:self
                                    action:@selector(resignAll)];
@@ -98,12 +105,11 @@
 
 - (void) gameVersionSuccess :(NSNotification *)anote {
     
-    NSDictionary *response = [anote userInfo];
-    
+    NSDictionary *response = [anote userInfo];    
     NSString *gameVersion = [response objectForKey:@"game_version"];
     
     [saved setObject:gameVersion forKey:@"game_version"];
-    //[[ApiCalls sharedClient]hunt];
+    
     [[ApiCalls sharedClient]login:txtUsername.text:txtPassword.text];
 }
 
@@ -135,14 +141,15 @@
 }
 
 - (void)huntSuccess :(NSNotification *)anote {
-    NSDictionary *response = [anote userInfo];
+    /*NSDictionary *response = [anote userInfo];
     NSDictionary *jsonResponse = [response objectForKey:@"user"];
-    NSArray *journal = [jsonResponse objectForKey:@"journals"];
+    NSArray *journal = [jsonResponse objectForKey:@"journals"]; */
     
     [saved setObject:@"900" forKey:@"timeRemining"];
     [saved synchronize];
     
-    NSLog(@"%@",journal);
+    NSLog(@"hunted");
+    //NSLog(@"%@",journal);
     
     [[NSNotificationCenter defaultCenter] postNotificationName: @"prepareToHunt" object: nil userInfo:nil];
 }

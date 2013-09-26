@@ -38,6 +38,7 @@
 		6BA3BF8517F17A4D0093BB8F /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BA3BF7A17F17A4D0093BB8F /* AFURLConnectionOperation.m */; };
 		6BA3BF8617F17A4D0093BB8F /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BA3BF7C17F17A4D0093BB8F /* AFXMLRequestOperation.m */; };
 		6BA3BF8717F17A4D0093BB8F /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BA3BF7E17F17A4D0093BB8F /* UIImageView+AFNetworking.m */; };
+		6BB5486C17F335BC00AB5704 /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6BB5486B17F335BC00AB5704 /* background.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +106,7 @@
 		6BA3BF7C17F17A4D0093BB8F /* AFXMLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFXMLRequestOperation.m; sourceTree = "<group>"; };
 		6BA3BF7D17F17A4D0093BB8F /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
 		6BA3BF7E17F17A4D0093BB8F /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
+		6BB5486B17F335BC00AB5704 /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				6BA3BF1917F176990093BB8F /* Hunter */,
+				6BB5486817F3348000AB5704 /* resources */,
 				6BA3BF6217F178CC0093BB8F /* Shared */,
 				6BA3BF5A17F178A60093BB8F /* Vendor */,
 				6BA3BF3817F176990093BB8F /* HunterTests */,
@@ -346,6 +349,15 @@
 			path = AFNetworking;
 			sourceTree = "<group>";
 		};
+		6BB5486817F3348000AB5704 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				6BB5486B17F335BC00AB5704 /* background.jpg */,
+			);
+			name = resources;
+			path = Hunter;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -423,6 +435,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6BA3BF2C17F176990093BB8F /* Images.xcassets in Resources */,
+				6BB5486C17F335BC00AB5704 /* background.jpg in Resources */,
 				6BA3BF1E17F176990093BB8F /* InfoPlist.strings in Resources */,
 				6BA3BF2717F176990093BB8F /* Main.storyboard in Resources */,
 			);

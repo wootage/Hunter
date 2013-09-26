@@ -66,8 +66,8 @@
     }else {
         
         time = remining + arc4random_uniform(30) + 30;
-        NSLog(@"time remining : %d",remining);
-        NSLog(@"%d",time);
+        //NSLog(@"time remining : %d",remining);
+        //NSLog(@"%d",time);
         _timer = [NSTimer scheduledTimerWithTimeInterval:time target:self selector:@selector(hunt) userInfo:nil repeats:NO];
     }
 }
