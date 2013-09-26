@@ -2,6 +2,7 @@
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate> {
     int time;
+    int delay;
 }
 
 @property (strong, nonatomic) UIWindow *window;

@@ -141,6 +141,24 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="bP7-DW-IaL">
+                                <rect key="frame" x="20" y="235" width="280" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="Tourney"/>
+                                    <segment title="Normal"/>
+                                    <segment title="Keep alive"/>
+                                </segments>
+                                <connections>
+                                    <action selector="modeChanged:" destination="ap1-RL-myi" eventType="valueChanged" id="nbn-m2-Rza"/>
+                                </connections>
+                            </segmentedControl>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ANU-aH-Mwq">
+                                <rect key="frame" x="26" y="271" width="274" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -160,7 +178,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="lblDelay" destination="ANU-aH-Mwq" id="VJh-uB-8D2"/>
                         <outlet property="lblLog" destination="rx1-iH-Q18" id="YmG-hk-37B"/>
+                        <outlet property="segment" destination="bP7-DW-IaL" id="Jk1-O2-VzI"/>
                         <outlet property="txtPassword" destination="Uxq-PB-FRT" id="wJd-wd-xtO"/>
                         <outlet property="txtUsername" destination="wrN-oy-ZBu" id="Nin-Iw-WQt"/>
                     </connections>

@@ -8,11 +8,17 @@
     
     __weak IBOutlet UITextField *txtPassword;
     __weak IBOutlet UITextField *txtUsername;
+    
     __weak IBOutlet UILabel *lblLog;
+    __weak IBOutlet UILabel *lblDelay;
+    __weak IBOutlet UISegmentedControl *segment;
+    
     __weak NSUserDefaults *saved;
+    
 }
 - (IBAction)btnMenuClicked:(id)sender;
 - (IBAction)btnLoginClicked:(id)sender;
+- (IBAction)modeChanged:(id)sender;
 
 @end
 
@@ -40,7 +46,9 @@
                                    action:@selector(resignAll)];
     
     [self.view addGestureRecognizer:tap];
-
+    
+    [self selectSegment];
+    [self setLabel];
     
     [[NSNotificationCenter defaultCenter] addObserver: self
                                              selector: @selector(gameVersionSuccess:)
@@ -94,6 +102,38 @@
 
 - (IBAction)btnLoginClicked:(id)sender {
     [[ApiCalls sharedClient]getGameVersion];
+}
+
+- (IBAction)modeChanged:(id)sender {
+    NSString *mode = [segment titleForSegmentAtIndex: [segment selectedSegmentIndex]];
+    [self setLabel];
+    [saved setObject:mode forKey:@"option"];
+}
+
+- (void)selectSegment {
+    
+    NSString *mode = [saved objectForKey:@"option"];
+    
+    if ([mode isEqualToString:@"Tourney"]) {
+        segment.selectedSegmentIndex = 0;
+    }else if ([mode isEqualToString:@"Normal"]) {
+        segment.selectedSegmentIndex = 1;
+    }else {
+        segment.selectedSegmentIndex = 2;
+    }
+}
+
+- (void)setLabel {
+    
+    int index = segment.selectedSegmentIndex;
+    
+    if (index == 0) {
+        [lblDelay setText:@"5s delay"];
+    }else if (index == 1) {
+        [lblDelay setText:@"30s - 120s delay"];
+    }else {
+        [lblDelay setText:@"30m - 45m delay"];
+    }
 }
 
 - (void)resignAll {

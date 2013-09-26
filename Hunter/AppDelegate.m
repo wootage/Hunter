@@ -13,7 +13,7 @@
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-
+    
     time = 10;
     UIBackgroundTaskIdentifier bgTask = 0;
     UIApplication  *app = [UIApplication sharedApplication];
@@ -52,16 +52,21 @@
 - (void)prepareToHunt:(NSNotification *)notification {
     
     NSUserDefaults *saved = [NSUserDefaults standardUserDefaults];
+    
     NSString *isLogged = [saved objectForKey:@"isLogged"];
     int remining = [[saved objectForKey:@"timeRemining"]intValue];
+    NSString *option = [saved objectForKey:@"option"];
+    
+    [self setDelay:option];
     
     if ([isLogged isEqualToString:@"false"]) {
         [_timer invalidate];
     }else {
         
-        time = remining + arc4random_uniform(30) + 30;
+        time = remining + delay;
         //NSLog(@"time remining : %d",remining);
-        //NSLog(@"%d",time);
+        NSLog(@"%d",delay);
+        NSLog(@"%@",option);
         _timer = [NSTimer scheduledTimerWithTimeInterval:time target:self selector:@selector(hunt) userInfo:nil repeats:NO];
     }
 }
@@ -86,5 +91,15 @@
     [[UIApplication sharedApplication] setScheduledLocalNotifications:[NSArray arrayWithObject:_notif]];
 }
 
+- (void)setDelay :(NSString *)option {
+    
+    if ([option isEqualToString:@"Tourney"]) {
+        delay = 5;
+    }else if ([option isEqualToString:@"Normal"]) {
+        delay = arc4random_uniform(90) + 30;
+    }else {
+        delay = arc4random_uniform(900) + 1800;
+    }
+}
 
 @end
